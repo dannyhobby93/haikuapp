@@ -13,7 +13,7 @@ function isAlphaNumeric(s) {
 
 export const logout = async function () {
     cookies().delete("haikuapp");
-    redirect("/");
+    return redirect("/");
 };
 
 export const login = async function (prevState, formData) {
@@ -64,13 +64,20 @@ export const login = async function (prevState, formData) {
 
     const token = jwt.sign(
         {
-            username: foundUser.username,
+            _id: foundUser._id,
+            exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
         },
         process.env.JWT_SECRET
     );
 
-    cookies().set("haikuapp", token);
-    redirect("/");
+    cookies().set("haikuapp", token, {
+        httpOnly: true,
+        sameSite: "strict",
+        maxAge: 60 * 60 * 24,
+        secure: true,
+    });
+
+    return redirect("/");
 };
 
 export const register = async function (prevState, formData) {
@@ -96,6 +103,13 @@ export const register = async function (prevState, formData) {
         errors.username = "Username can only contain letters and numbers";
     if (!user.username) errors.username = "Username is required";
 
+    // Check if username already exists
+    const usersCollection = await getCollection("users");
+    const foundUser = await usersCollection.findOne({
+        username: user.username,
+    });
+    if (foundUser) errors.username = "Username already exists";
+
     // Password
     if (user.password.length < 8)
         errors.password = "Password must be at least 8 characters";
@@ -116,14 +130,12 @@ export const register = async function (prevState, formData) {
     user.password = bcrypt.hashSync(user.password, salt);
 
     // store new user in db
-    const usersCollection = await getCollection("users");
     const result = await usersCollection.insertOne(user);
 
     // log user in by cookies
     const token = jwt.sign(
         {
             _id: result.insertedId.toString(),
-            username: user.username,
             exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
         },
         process.env.JWT_SECRET

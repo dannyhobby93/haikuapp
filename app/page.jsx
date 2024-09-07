@@ -15,7 +15,7 @@ export default async function Page() {
                 </div>
             )) || (
                 <div>
-                    <p>You are logged in as {user.username}</p>
+                    <p>You are logged in.</p>
                 </div>
             )}
         </>
