@@ -1,0 +1,36 @@
+{
+  "node": {
+    "b21fbb9bc08e986d2436bf1c49496da7a8ebe0fc": {
+      "workers": {
+        "app/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fdanny%2FDevelopment%2FProjects%2Fhaikuapp%2Factions%2FuserController.js%22%2C%5B%22logout%22%2C%22register%22%5D%5D%5D&__client_imported__=!",
+        "app/login/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fdanny%2FDevelopment%2FProjects%2Fhaikuapp%2Factions%2FuserController.js%22%2C%5B%22logout%22%2C%22login%22%2C%22register%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/page": "rsc",
+        "app/login/page": "rsc"
+      }
+    },
+    "83e5732319664ce04c19d1d9fd5cc687d5d418f7": {
+      "workers": {
+        "app/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fdanny%2FDevelopment%2FProjects%2Fhaikuapp%2Factions%2FuserController.js%22%2C%5B%22logout%22%2C%22register%22%5D%5D%5D&__client_imported__=!",
+        "app/_not-found/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fdanny%2FDevelopment%2FProjects%2Fhaikuapp%2Factions%2FuserController.js%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=!",
+        "app/login/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fdanny%2FDevelopment%2FProjects%2Fhaikuapp%2Factions%2FuserController.js%22%2C%5B%22logout%22%2C%22login%22%2C%22register%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/page": "rsc",
+        "app/_not-found/page": "rsc",
+        "app/login/page": "rsc"
+      }
+    },
+    "8faeb4f6ef8c379d54676f59bfb8975616e19ab4": {
+      "workers": {
+        "app/login/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fdanny%2FDevelopment%2FProjects%2Fhaikuapp%2Factions%2FuserController.js%22%2C%5B%22logout%22%2C%22login%22%2C%22register%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/login/page": "rsc"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "EghgGIlJTaN4PFVRD/dCptp4Y/1ldl+l2M4IGRrlvTA="
+}
