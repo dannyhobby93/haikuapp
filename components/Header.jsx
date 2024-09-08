@@ -15,16 +15,26 @@ export default async function Header() {
                         </Link>
                     </div>
                     <div className="flex-none">
-                        <ul className="menu menu-horizontal px-1">
+                        <ul className="menu menu-horizontal px-1 gap-2">
                             {(user && (
-                                <li>
-                                    <form
-                                        action={logout}
-                                        className="btn btn-neutral"
-                                    >
-                                        <button>Logout</button>
-                                    </form>
-                                </li>
+                                <>
+                                    <li>
+                                        <Link
+                                            href="/create-haiku"
+                                            className="btn btn-primary"
+                                        >
+                                            Create Haiku
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <form
+                                            action={logout}
+                                            className="btn btn-neutral"
+                                        >
+                                            <button>Logout</button>
+                                        </form>
+                                    </li>
+                                </>
                             )) || (
                                 <li>
                                     <Link href="/login">Login</Link>
