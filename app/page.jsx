@@ -1,3 +1,4 @@
+import Dashboard from "../components/Dashboard";
 import RegisterForm from "../components/RegisterForm";
 import { getUserFromCookie } from "../lib/getUser";
 
@@ -13,11 +14,7 @@ export default async function Page() {
                     </p>
                     <RegisterForm />
                 </div>
-            )) || (
-                <div>
-                    <p>You are logged in.</p>
-                </div>
-            )}
+            )) || <Dashboard user={user} />}
         </>
     );
 }

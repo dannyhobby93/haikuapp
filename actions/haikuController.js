@@ -61,6 +61,69 @@ async function haikuValidation(data, user) {
     };
 }
 
+export const deleteHaiku = async function (formData) {
+    const user = await getUserFromCookie();
+
+    if (!user) {
+        return redirect("/login");
+    }
+
+    const collection = await getCollection("haikus");
+    const haikuId = formData.get("_id");
+    const haiku = await collection.findOne({
+        _id: ObjectId.createFromHexString(haikuId),
+    });
+
+    if (haiku.author.toString() !== user._id) {
+        return redirect("/");
+    }
+
+    await collection.findOneAndDelete({
+        _id: ObjectId.createFromHexString(haikuId),
+    });
+
+    return redirect("/");
+};
+
+export const updateHaiku = async function (prevState, formData) {
+    const user = await getUserFromCookie();
+
+    console.log(user);
+
+    if (!user) {
+        return redirect("/login");
+    }
+
+    const results = await haikuValidation(formData, user);
+
+    if (Object.keys(results.errors).length > 0) {
+        return {
+            ...prevState,
+            ...results,
+        };
+    }
+
+    const collection = await getCollection("haikus");
+    let haikuId = formData.get("_id");
+
+    if (typeof haikuId !== "string") haikuId = "";
+
+    const haiku = await collection.findOne({
+        _id: ObjectId.createFromHexString(haikuId),
+    });
+
+    if (haiku.author.toString() !== user._id) {
+        return redirect("/");
+    }
+
+    await collection.findOneAndUpdate(
+        { _id: ObjectId.createFromHexString(haikuId) },
+        { $set: results.haiku }
+    );
+
+    return redirect("/");
+};
+
 export const createHaiku = async function (prevState, formData) {
     const user = await getUserFromCookie();
 

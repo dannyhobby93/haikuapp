@@ -14,7 +14,7 @@ export default async function CreateHaiku() {
             <h2 className="text-2xl text-center text-gray-600 mb-5">
                 Create Haiku
             </h2>
-            <HaikuForm />
+            <HaikuForm action="create" />
         </>
     );
 }
