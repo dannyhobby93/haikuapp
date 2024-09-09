@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { ObjectId } from "mongodb";
-import { deleteHaiku } from "../actions/haikuController";
 import { getCollection } from "../lib/db";
+import Haiku from "./Haiku";
 
 async function getHaikus(id) {
     const collection = await getCollection("haikus");
@@ -10,7 +9,15 @@ async function getHaikus(id) {
         .sort({ _id: -1 })
         .toArray();
 
-    return results;
+    const haikus = results.map((haiku) => {
+        return {
+            ...haiku,
+            _id: haiku._id.toString(),
+            author: haiku.author.toString(),
+        };
+    });
+
+    return haikus;
 }
 
 export default async function Dashboard(props) {
@@ -29,24 +36,7 @@ export default async function Dashboard(props) {
             )}
 
             {haikus.map((haiku, index) => (
-                <div className="card bg-base-100 shadow-xl mb-5" key={index}>
-                    <div className="card-body">
-                        <h2 className="card-title">
-                            {haiku.line1} {haiku.line2} {haiku.line3}
-                        </h2>
-                        <Link href={`/edit-haiku/${haiku._id.toString()}`}>
-                            Edit
-                        </Link>
-                        <form action={deleteHaiku}>
-                            <input
-                                type="hidden"
-                                name="_id"
-                                defaultValue={haiku._id.toString()}
-                            />
-                            <button type="submit">Delete</button>
-                        </form>
-                    </div>
-                </div>
+                <Haiku key={index} haiku={haiku} />
             ))}
         </div>
     );

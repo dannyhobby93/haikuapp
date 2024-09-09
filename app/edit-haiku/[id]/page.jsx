@@ -1,8 +1,8 @@
-import HaikuForm from "../../../components/HaikuForm";
 import { ObjectId } from "mongodb";
+import { redirect } from "next/navigation";
+import HaikuForm from "../../../components/HaikuForm";
 import { getCollection } from "../../../lib/db";
 import { getUserFromCookie } from "../../../lib/getUser";
-import { redirect } from "next/navigation";
 
 async function getDoc(id) {
     const collection = await getCollection("haikus");
@@ -10,7 +10,13 @@ async function getDoc(id) {
         _id: ObjectId.createFromHexString(id),
     });
 
-    return result;
+    const doc = {
+        ...result,
+        _id: result._id.toString(),
+        author: result.author.toString(),
+    };
+
+    return doc;
 }
 
 export default async function EditHaiku(props) {

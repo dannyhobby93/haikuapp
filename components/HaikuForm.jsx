@@ -1,10 +1,17 @@
 "use client";
 
-import { createHaiku, updateHaiku } from "../actions/haikuController";
 import { useFormState, useFormStatus } from "react-dom";
+import { createHaiku, updateHaiku } from "../actions/haikuController";
+
+import { CldUploadWidget } from "next-cloudinary";
+import { useState } from "react";
 
 export default function HaikuForm(props) {
     let action = props.action === "create" ? createHaiku : updateHaiku;
+
+    const [signature, setSignature] = useState("");
+    const [public_id, setPublicId] = useState("");
+    const [version, setVersion] = useState("");
 
     const [formState, formAction] = useFormState(action, {});
 
@@ -55,9 +62,41 @@ export default function HaikuForm(props) {
                     </p>
                 )}
             </div>
+            <div className="mb-3">
+                <CldUploadWidget
+                    onSuccess={(result, { widget }) => {
+                        setSignature(result?.info.signature);
+                        setPublicId(result?.info.public_id);
+                        setVersion(result?.info.version);
+                    }}
+                    onQueuesEnd={(result, { widget }) => {
+                        widget.close();
+                    }}
+                    signatureEndpoint="/api/cloudinary"
+                >
+                    {({ open }) => {
+                        function handleClick(e) {
+                            e.preventDefault();
+                            open();
+                        }
+
+                        return (
+                            <button
+                                className="btn btn-secondary w-full"
+                                onClick={handleClick}
+                            >
+                                Upload an Image
+                            </button>
+                        );
+                    }}
+                </CldUploadWidget>
+            </div>
+            <input type="hidden" name="public_id" value={public_id} />
+            <input type="hidden" name="version" value={version} />
+            <input type="hidden" name="signature" value={signature} />
             <input
                 type="hidden"
-                name="_id"
+                name="haiku_id"
                 defaultValue={props.haiku?._id.toString()}
             />
             {(props.action === "update" && (

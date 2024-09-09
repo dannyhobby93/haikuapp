@@ -1,9 +1,16 @@
 "use server";
 
+import cloudinary from "cloudinary";
 import { ObjectId } from "mongodb";
+import { redirect } from "next/navigation";
 import { getCollection } from "../lib/db";
 import { getUserFromCookie } from "../lib/getUser";
-import { redirect } from "next/navigation";
+
+const cloudinaryConfig = cloudinary.config({
+    cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 function isAlphaNumericWithBasic(s) {
     const regex = /^[a-zA-Z0-9 .,-]*$/;
@@ -55,6 +62,18 @@ async function haikuValidation(data, user) {
     if (!haiku.line2) errors.line2 = "Line 2 is required";
     if (!haiku.line3) errors.line3 = "Line 3 is required";
 
+    // verify signature
+    const expectedSignature = cloudinary.utils.api_sign_request(
+        {
+            public_id: data.get("public_id"),
+            version: data.get("version"),
+        },
+        cloudinaryConfig.api_secret
+    );
+    if (expectedSignature === data.get("signature")) {
+        haiku.photo = data.get("public_id");
+    }
+
     return {
         errors,
         haiku,
@@ -86,9 +105,7 @@ export const deleteHaiku = async function (formData) {
 };
 
 export const updateHaiku = async function (prevState, formData) {
-    const user = await getUserFromCookie();
-
-    console.log(user);
+    let user = await getUserFromCookie();
 
     if (!user) {
         return redirect("/login");
@@ -104,7 +121,7 @@ export const updateHaiku = async function (prevState, formData) {
     }
 
     const collection = await getCollection("haikus");
-    let haikuId = formData.get("_id");
+    let haikuId = formData.get("haiku_id");
 
     if (typeof haikuId !== "string") haikuId = "";
 
@@ -126,8 +143,6 @@ export const updateHaiku = async function (prevState, formData) {
 
 export const createHaiku = async function (prevState, formData) {
     const user = await getUserFromCookie();
-
-    console.log(user);
 
     if (!user) {
         return redirect("/login");
