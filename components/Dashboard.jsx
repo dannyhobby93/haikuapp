@@ -22,6 +22,12 @@ export default async function Dashboard(props) {
                 Your Haikus
             </h2>
 
+            {!haikus.length && (
+                <p className="text-center italic text-gray-400">
+                    No haikus to display.
+                </p>
+            )}
+
             {haikus.map((haiku, index) => (
                 <div className="card bg-base-100 shadow-xl mb-5" key={index}>
                     <div className="card-body">
