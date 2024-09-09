@@ -2,7 +2,7 @@
 
 import { useFormState, useFormStatus } from "react-dom";
 
-import { register } from "../actions/userController";
+import { register } from "@/actions/userController";
 
 export default function RegisterForm() {
     const [formState, formAction] = useFormState(register, {});

@@ -1,5 +1,5 @@
-import HaikuForm from "../../components/HaikuForm";
-import { getUserFromCookie } from "../../lib/getUser";
+import HaikuForm from "@/components/HaikuForm";
+import { getUserFromCookie } from "@/lib/getUser";
 import { redirect } from "next/navigation";
 
 export default async function CreateHaiku() {

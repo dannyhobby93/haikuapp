@@ -1,6 +1,6 @@
-import { ObjectId } from "mongodb";
-import { getCollection } from "../lib/db";
 import Haiku from "./Haiku";
+import { ObjectId } from "mongodb";
+import { getCollection } from "@/lib/db";
 
 async function getHaikus(id) {
     const collection = await getCollection("haikus");

@@ -1,8 +1,8 @@
+import HaikuForm from "@/components/HaikuForm";
 import { ObjectId } from "mongodb";
+import { getCollection } from "@/lib/db";
+import { getUserFromCookie } from "@/lib/getUser";
 import { redirect } from "next/navigation";
-import HaikuForm from "../../../components/HaikuForm";
-import { getCollection } from "../../../lib/db";
-import { getUserFromCookie } from "../../../lib/getUser";
 
 async function getDoc(id) {
     const collection = await getCollection("haikus");

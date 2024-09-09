@@ -2,7 +2,7 @@
 
 import { useFormState, useFormStatus } from "react-dom";
 
-import { login } from "../actions/userController";
+import { login } from "@/actions/userController";
 
 export default function LoginForm() {
     const [formState, formAction] = useFormState(login, {});

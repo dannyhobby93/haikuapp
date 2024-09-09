@@ -2,7 +2,7 @@
 
 import { CldImage } from "next-cloudinary";
 import Link from "next/link";
-import { deleteHaiku } from "../actions/haikuController";
+import { deleteHaiku } from "@/actions/haikuController";
 
 export default function Haiku(props) {
     if (!props.haiku.photo) {

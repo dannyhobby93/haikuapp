@@ -1,7 +1,7 @@
 "use client";
 
+import { createHaiku, updateHaiku } from "@/actions/haikuController";
 import { useFormState, useFormStatus } from "react-dom";
-import { createHaiku, updateHaiku } from "../actions/haikuController";
 
 import { CldUploadWidget } from "next-cloudinary";
 import { useState } from "react";
